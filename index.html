@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Homora Finance</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .listing-page {
+        min-height: 100vh;
+        background:
+          radial-gradient(circle at top left, rgba(91, 75, 218, 0.18), transparent 24%),
+          radial-gradient(circle at bottom right, rgba(29, 187, 139, 0.12), transparent 20%),
+          linear-gradient(135deg, #f6f3ff 0%, #f4f9ff 100%);
+        color: var(--text);
+      }
+
+      .store-shell {
+        max-width: 1220px;
+        margin: 0 auto;
+        padding: 26px 20px 40px;
+      }
+
+      .store-header {
+        border: 1px solid rgba(148, 163, 184, 0.14);
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(18px);
+        box-shadow: 0 20px 42px rgba(61, 42, 126, 0.08);
+        border-radius: 28px;
+        padding: 20px 22px 10px;
+      }
+
+      .store-topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 4px 4px 18px;
+      }
+
+      .brand-row {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .app-mark {
+        width: 52px;
+        height: 52px;
+        display: grid;
+        place-items: center;
+        border-radius: 16px;
+        background: linear-gradient(135deg, #5b4bda, #2ec6a0);
+        color: white;
+        font-size: 1.4rem;
+        font-weight: 800;
+        box-shadow: 0 20px 34px rgba(91, 75, 218, 0.24);
+      }
+
+      .brand-row h2 {
+        margin: 0;
+        font-size: 1.3rem;
+        letter-spacing: -0.04em;
+      }
+
+      .brand-row small {
+        display: block;
+        color: var(--muted);
+        font-size: 0.7rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .topbar-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .status-tag,
+      .small-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.52rem 0.8rem;
+        border-radius: 999px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .status-tag {
+        background: rgba(91, 75, 218, 0.08);
+        color: var(--primary);
+      }
+
+      .small-badge {
+        background: rgba(29, 187, 139, 0.09);
+        color: var(--green);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 26px;
+        align-items: center;
+        padding: 18px 4px 12px;
+      }
+
+      .hero-copy {
+        padding: 20px 10px 18px 8px;
+      }
+
+      .pill-row {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 18px;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 999px;
+        padding: 0.5rem 0.8rem;
+        font-size: 0.7rem;
+        font-weight: 700;
+        background: rgba(91, 75, 218, 0.1);
+        color: var(--primary);
+      }
+
+      .pill.alt {
+        background: rgba(29, 187, 139, 0.12);
+        color: var(--green);
+      }
+
+      .hero-copy h1 {
+        margin: 0 0 16px;
+        font-size: clamp(2.8rem, 4vw, 5rem);
+        line-height: 0.95;
+        letter-spacing: -0.08em;
+      }
+
+      .hero-copy p {
+        margin: 0 0 22px;
+        color: var(--muted);
+        font-size: 1.08rem;
+        line-height: 1.7;
+        max-width: 560px;
+      }
+
+      .cta-row {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin-bottom: 18px;
+      }
+
+      .primary-btn,
+      .secondary-btn {
+        border: none;
+        border-radius: 14px;
+        padding: 0.96rem 1.4rem;
+        font-weight: 700;
+        transition: transform 0.2s ease;
+      }
+
+      .primary-btn {
+        background: linear-gradient(135deg, var(--primary), var(--primary-deep));
+        color: white;
+        box-shadow: 0 18px 32px rgba(91, 75, 218, 0.22);
+      }
+
+      .secondary-btn {
+        background: rgba(255,255,255,0.7);
+        color: var(--text);
+        border: 1px solid rgba(148, 163, 184, 0.16);
+      }
+
+      .primary-btn:hover,
+      .secondary-btn:hover,
+      .ghost-button:hover,
+      .oauth-btn:hover,
+      .tab:hover {
+        transform: translateY(-1px);
+      }
+
+      .trust-row {
+        display: flex;
+        align-items: center;
+        gap: 26px;
+        flex-wrap: wrap;
+        color: var(--muted);
+        font-size: 0.76rem;
+        font-weight: 700;
+      }
+
+      .trust-row strong {
+        color: var(--text);
+        font-size: 1rem;
+      }
+
+      .phone-scene {
+        padding: 20px 6px 8px 0;
+      }
+
+      .phone-shell {
+        width: min(100%, 440px);
+        margin-left: auto;
+        padding: 16px 16px 18px;
+        border-radius: 34px;
+        background: linear-gradient(180deg, rgba(14, 22, 38, 0.96), rgba(28, 38, 60, 0.96));
+        box-shadow: 0 28px 60px rgba(15, 23, 42, 0.22);
+        position: relative;
+      }
+
+      .camera {
+        width: 120px;
+        height: 20px;
+        margin: 0 auto 12px;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.08);
+      }
+
+      .phone-screen {
+        min-height: 540px;
+        padding: 18px 14px 12px;
+        border-radius: 24px;
+        background: linear-gradient(180deg, #f4f3ff 0%, #eef8ff 100%);
+      }
+
+      .mini-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        color: var(--muted);
+        font-size: 0.68rem;
+        font-weight: 700;
+      }
+
+      .mini-header strong {
+        color: var(--text);
+        font-size: 1.2rem;
+      }
+
+      .mini-balance {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin: 18px 0 12px;
+      }
+
+      .mini-balance span {
+        color: var(--muted);
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-weight: 700;
+      }
+
+      .mini-balance strong {
+        font-size: 2.1rem;
+        letter-spacing: -0.06em;
+      }
+
+      .mini-chart {
+        height: 110px;
+        border-radius: 16px;
+        background: linear-gradient(180deg, rgba(91, 75, 218, 0.1), rgba(29, 187, 139, 0.08));
+        position: relative;
+        margin-bottom: 18px;
+      }
+
+      .mini-chart::before {
+        content: "";
+        position: absolute;
+        inset: 16px 10px 10px 10px;
+        background: linear-gradient(135deg, rgba(91,75,218,0.8), rgba(29,187,139,0.52));
+        clip-path: polygon(0% 72%, 18% 66%, 34% 70%, 52% 42%, 72% 54%, 86% 28%, 100% 18%, 100% 100%, 0% 100%);
+        border-radius: 10px;
+      }
+
+      .mini-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 10px 12px;
+        border-radius: 12px;
+        background: rgba(255,255,255,0.8);
+        margin-bottom: 10px;
+        color: var(--muted);
+        font-size: 0.72rem;
+        font-weight: 700;
+      }
+
+      .mini-row strong {
+        color: var(--text);
+        font-size: 0.88rem;
+      }
+
+      .listing-main {
+        padding-top: 16px;
+      }
+
+      .feature-strip,
+      .screenshots-section,
+      .info-grid,
+      .reviews-grid {
+        margin-top: 24px;
+      }
+
+      .feature-strip {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .feature-card,
+      .review-card,
+      .score-panel,
+      .shot-card {
+        background: rgba(255,255,255,0.72);
+        border: 1px solid rgba(148,163,184,0.12);
+        border-radius: 24px;
+        box-shadow: 0 16px 30px rgba(61, 42, 126, 0.06);
+      }
+
+      .feature-card {
+        padding: 18px 16px;
+      }
+
+      .feature-icon {
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        border-radius: 12px;
+        background: rgba(91, 75, 218, 0.08);
+        color: var(--primary);
+        font-size: 1.1rem;
+        margin-bottom: 14px;
+      }
+
+      .feature-card h3 {
+        margin: 0 0 8px;
+        font-size: 1.1rem;
+      }
+
+      .feature-card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+        font-size: 0.86rem;
+      }
+
+      .section-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 18px;
+      }
+
+      .section-head h2 {
+        margin: 0;
+        font-size: clamp(2rem, 3vw, 2.7rem);
+        letter-spacing: -0.05em;
+      }
+
+      .section-head span {
+        color: var(--muted);
+        font-weight: 700;
+      }
+
+      .screenshot-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .shot-card {
+        padding: 14px;
+      }
+
+      .shot-screen {
+        height: 420px;
+        border-radius: 24px;
+        background: linear-gradient(180deg, #f3f2ff 0%, #ecf7ff 100%);
+        padding: 16px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .shot-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--muted);
+        font-size: 0.66rem;
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+
+      .shot-box {
+        height: 120px;
+        border-radius: 18px;
+        background: linear-gradient(135deg, rgba(91,75,218,0.14), rgba(29,187,139,0.08));
+        margin-bottom: 14px;
+      }
+
+      .shot-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .shot-row {
+        height: 14px;
+        border-radius: 999px;
+        background: rgba(91, 75, 218, 0.08);
+      }
+
+      .shot-row:nth-child(2) { width: 72%; }
+      .shot-row:nth-child(3) { width: 88%; }
+      .shot-row:nth-child(4) { width: 62%; }
+
+      .info-grid {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 18px;
+      }
+
+      .score-panel,
+      .review-card {
+        padding: 20px 18px;
+      }
+
+      .score-panel h3,
+      .review-card h3 {
+        margin: 0 0 8px; font-size: 1.2rem;
+      }
+
+      .score-box {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin: 18px 0;
+      }
+
+      .score-box strong {
+        font-size: 3rem;
+        letter-spacing: -0.06em;
+      }
+
+      .stars-large {
+        color: #f5b400;
+        letter-spacing: 0.12em;
+        font-size: 1.1rem;
+      }
+
+      .score-meta {
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .review-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .review-card {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .review-card .stars {
+        font-size: 0.8rem;
+      }
+
+      .review-card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .review-person {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 8px;
+      }
+
+      .review-avatar {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, rgba(91,75,218,0.18), rgba(29,187,139,0.18));
+        display: grid;
+        place-items: center;
+        font-weight: 700;
+      }
+
+      .install-banner {
+        margin-top: 28px;
+        border-radius: 28px;
+        padding: 30px 24px;
+        background: linear-gradient(135deg, rgba(91,75,218,0.92), rgba(29,187,139,0.82));
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      .install-banner h2 {
+        margin: 0 0 8px;
+        font-size: clamp(2rem, 3vw, 2.7rem);
+        letter-spacing: -0.05em;
+      }
+
+      .install-banner p {
+        margin: 0;
+        opacity: 0.9;
+      }
+
+      .banner-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .banner-actions .secondary-btn {
+        background: rgba(255,255,255,0.14);
+        color: white;
+        border: 1px solid rgba(255,255,255,0.2);
+      }
+
+      @media (max-width: 980px) {
+        .hero,
+        .info-grid,
+        .feature-strip,
+        .screenshot-grid,
+        .review-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .phone-shell {
+          margin: 0 auto;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .store-shell {
+          padding-left: 14px;
+          padding-right: 14px;
+        }
+
+        .store-topbar,
+        .section-head,
+        .install-banner {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .hero-copy h1 {
+          font-size: 2.8rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="listingPage" class="listing-page">
+      <div class="store-shell">
+        <header class="store-header">
+          <div class="store-topbar">
+            <div class="brand-row">
+              <div class="app-mark">H</div>
+              <div>
+                <small>Finance app</small>
+                <h2>Homora Finance</h2>
+              </div>
+            </div>
+            <div class="topbar-actions">
+              <span class="status-tag">4.9 ★</span>
+              <span class="small-badge">Secure</span>
+            </div>
+          </div>
+
+          <div class="hero">
+            <div class="hero-copy">
+              <div class="pill-row">
+                <span class="pill">#1 Money habits</span>
+                <span class="pill alt">Available in 32 countries</span>
+              </div>
+              <h1>Money habits that feel easy.</h1>
+              <p>
+                Homora helps you budget smarter, track cash flow, and automate savings with a premium app experience built for real life.
+              </p>
+              <div class="cta-row">
+                <button class="primary-btn" id="openAuthBtn" type="button">Get the app</button>
+                <button class="secondary-btn" id="demoDashboardBtn" type="button">Open dashboard</button>
+              </div>
+              <div class="trust-row">
+                <div><strong>1.2M+</strong> downloads</div>
+                <div><strong>4.9/5</strong> rating</div>
+                <div><strong>homora.app</strong> web access</div>
+              </div>
+            </div>
+
+            <div class="phone-scene">
+              <div class="phone-shell">
+                <div class="camera"></div>
+                <div class="phone-screen">
+                  <div class="mini-header">
+                    <span>Portfolio</span>
+                    <strong>$24,860</strong>
+                  </div>
+                  <div class="mini-balance">
+                    <span>Available balance</span>
+                    <strong>$12,540</strong>
+                  </div>
+                  <div class="mini-chart"></div>
+                  <div class="mini-row"><span>Income</span><strong>$8,420</strong></div>
+                  <div class="mini-row"><span>Expenses</span><strong>$3,740</strong></div>
+                  <div class="mini-row"><span>Savings</span><strong>18.4%</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <main class="listing-main">
+          <section class="feature-strip">
+            <article class="feature-card">
+              <div class="feature-icon">💳</div>
+              <h3>Smart budgeting</h3>
+              <p>Plan your monthly spending with live category tracking and realistic spending alerts.</p>
+            </article>
+            <article class="feature-card">
+              <div class="feature-icon">📈</div>
+              <h3>Cash flow insights</h3>
+              <p>Spot trends early with dashboard insights and a clear view of where your money is going.</p>
+            </article>
+            <article class="feature-card">
+              <div class="feature-icon">🎯</div>
+              <h3>Goal tracking</h3>
+              <p>Build emergency, travel, and milestone goals with progress that stays motivating.</p>
+            </article>
+            <article class="feature-card">
+              <div class="feature-icon">🔒</div>
+              <h3>Bank-grade security</h3>
+              <p>Protected login flows, biometric device access, and encrypted data for everyday peace of mind.</p>
+            </article>
+          </section>
+
+          <section class="screenshots-section">
+            <div class="section-head">
+              <h2>App screenshots</h2>
+              <span>Real-life money planning</span>
+            </div>
+            <div class="screenshot-grid">
+              <div class="shot-card">
+                <div class="shot-screen">
+                  <div class="shot-header"><span>Overview</span><strong>12:44</strong></div>
+                  <div class="shot-box"></div>
+                  <div class="shot-list">
+                    <div class="shot-row"></div>
+                    <div class="shot-row"></div>
+                    <div class="shot-row"></div>
+                    <div class="shot-row"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="shot-card">
+                <div class="shot-screen">
+                  <div class="shot-header"><span>Budget</span><strong>12:44</strong></div>
+                  <div class="shot-box"></div>
+                  <div class="shot-list">
+                    <div class="shot-row"></div>
+                    <div class="shot-row"></div>
+                    <div class="shot-row"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="shot-card">
+                <div class="shot-screen">
+                  <div class="shot-header"><span>Goals</span><strong>12:44</strong></div>
+                  <div class="shot-box"></div>
+                  <div class="shot-list">
+                    <div class="shot-row"></div>
+                    <div class="shot-row"></div>
+                    <div class="shot-row"></div>
+                    <div class="shot-row"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="info-grid">
+            <div class="score-panel">
+              <h3>Why users stay</h3>
+              <div class="score-box">
+                <strong>4.9</strong>
+                <div>
+                  <div class="stars-large">★★★★★</div>
+                  <div class="score-meta">Rated by 48,000+ users across app stores and web.</div>
+                </div>
+              </div>
+              <div class="score-meta">
+                Users love how quickly Homora turns complexity into clarity — from instant overview to saving goals that feel realistic and motivating.
+              </div>
+            </div>
+
+            <div class="score-panel">
+              <h3>Top benefits</h3>
+              <div class="score-meta">
+                <ul>
+                  <li>Unified financial dashboard</li>
+                  <li>Subscription and budget visibility</li>
+                  <li>Goal-based savings recommendations</li>
+                  <li>Cross-device access on mobile and browser</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section class="reviews-grid">
+            <article class="review-card">
+              <div class="stars">★★★★★</div>
+              <p>“It finally feels simple to understand where my money is going. The dashboard is clean, motivating, and easy to trust.”</p>
+              <div class="review-person">
+                <div class="review-avatar">A</div>
+                <strong>Aisha M.</strong>
+              </div>
+            </article>
+            <article class="review-card">
+              <div class="stars">★★★★★</div>
+              <p>“I used to avoid checking my budget. Homora makes it feel like a productivity tool instead of a chore.”</p>
+              <div class="review-person">
+                <div class="review-avatar">R</div>
+                <strong>Rafael T.</strong>
+              </div>
+            </article>
+            <article class="review-card">
+              <div class="stars">★★★★★</div>
+              <p>“I love the browser login and mobile sync. The design feels premium, and the savings insights are genuinely useful.”</p>
+              <div class="review-person">
+                <div class="review-avatar">N</div>
+                <strong>Nia K.</strong>
+              </div>
+            </article>
+          </section>
+
+          <div class="install-banner">
+            <div>
+              <h2>Start saving smarter today</h2>
+              <p>Track money, build habits, and reach goals with a cleaner personal finance experience.</p>
+            </div>
+            <div class="banner-actions">
+              <button class="primary-btn" id="getAppBtn" type="button">Open login</button>
+              <button class="secondary-btn" type="button">Get app</button>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <div id="authPage" class="auth-page hidden">
+      <div class="auth-shell">
+        <aside class="auth-visual">
+          <div class="brand-lockup">
+            <div class="logo-badge">H</div>
+            <div>
+              <span class="eyebrow">Smart money OS</span>
+              <h1>Homora Finance</h1>
+            </div>
+          </div>
+
+          <p class="lead-copy">
+            Track spending, automate savings, and build confident money habits across every device.
+          </p>
+
+          <div class="visual-stack">
+            <div class="glass-card primary-glass">
+              <div class="glass-top">
+                <span>Portfolio</span>
+                <strong>$24,860</strong>
+              </div>
+              <div class="sparkline-wrap large-spark">
+                <svg viewBox="0 0 100 40" class="sparkline" aria-hidden="true">
+                  <path d="M0 28 L12 24 L22 20 L34 15 L48 18 L62 10 L76 12 L92 5 L100 2" />
+                </svg>
+              </div>
+            </div>
+
+            <div class="mobile-preview-card">
+              <div class="mobile-preview-header">
+                <span>App login</span>
+                <strong>Secure</strong>
+              </div>
+              <div class="mobile-login-form">
+                <span>Email</span>
+                <div class="input-line"></div>
+                <span>Password</span>
+                <div class="input-line short"></div>
+                <button type="button">Continue</button>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <main class="auth-panel">
+          <div class="auth-topbar">
+            <div class="status-pill">Available on web & mobile</div>
+            <button class="ghost-button" type="button" id="openListingBtn">View listing</button>
+          </div>
+
+          <div class="auth-form-shell">
+            <div class="tab-row">
+              <button class="tab active" id="signInTab" type="button" data-mode="signin">Sign in</button>
+              <button class="tab" id="createAccountTab" type="button" data-mode="signup">Create account</button>
+            </div>
+
+            <div class="auth-copy">
+              <h2 id="authTitle">Welcome back</h2>
+              <p id="authSubtitle">Access your finances from mobile or browser without friction.</p>
+            </div>
+
+            <form id="browserLoginForm" class="browser-login-form">
+              <label>
+                <span>Email address</span>
+                <input id="loginEmail" type="email" placeholder="you@example.com" required />
+              </label>
+
+              <label>
+                <span>Password</span>
+                <input id="loginPassword" type="password" placeholder="Enter your password" required />
+              </label>
+
+              <div class="form-row-inline">
+                <label class="remember-box">
+                  <input type="checkbox" checked />
+                  <span>Remember me</span>
+                </label>
+                <a href="#">Forgot password?</a>
+              </div>
+
+              <button class="primary-btn auth-btn" id="authSubmitBtn" type="submit">Log in</button>
+            </form>
+
+            <div class="divider"><span>or continue with</span></div>
+
+            <div class="oauth-row">
+              <button type="button" class="oauth-btn">Google</button>
+              <button type="button" class="oauth-btn">Apple</button>
+            </div>
+
+            <div class="login-status" id="loginStatus" aria-live="polite"></div>
+
+            <div class="mobile-login-card">
+              <div class="device-frame">
+                <div class="device-screen">
+                  <div class="device-metrics">
+                    <span>Balance</span>
+                    <strong>$12,540</strong>
+                  </div>
+                  <div class="device-chart"></div>
+                  <div class="device-row"><span>Income</span><strong>$4,280</strong></div>
+                  <div class="device-row"><span>Expenses</span><strong>$1,960</strong></div>
+                </div>
+              </div>
+              <div class="device-caption">
+                <strong>Mobile app login</strong>
+                <span>Instant access with Face ID and push alerts.</span>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <div id="dashboardPage" class="dashboard-page hidden">
+      <div class="dashboard-shell">
+        <aside class="dashboard-sidebar">
+          <div class="dashboard-brand">
+            <div class="logo-badge small">H</div>
+            <div>
+              <span class="eyebrow left">Home</span>
+              <h3>Homora</h3>
+            </div>
+          </div>
+
+          <nav class="dashboard-nav">
+            <button class="nav-item active" type="button">Overview</button>
+            <button class="nav-item" type="button">Budget</button>
+            <button class="nav-item" type="button">Cards</button>
+            <button class="nav-item" type="button">Goals</button>
+            <button class="nav-item" type="button">Insights</button>
+          </nav>
+
+          <div class="sidebar-tip">
+            <span class="eyebrow left">Smart insight</span>
+            <strong>You’re 18% ahead of last month.</strong>
+          </div>
+        </aside>
+
+        <main class="dashboard-main">
+          <header class="dashboard-header">
+            <div>
+              <span class="eyebrow left">Good morning</span>
+              <h2>Finance overview</h2>
+            </div>
+            <div class="header-actions">
+              <button class="ghost-button" type="button">Export</button>
+              <button class="primary-btn" type="button" id="logoutBtn">Log out</button>
+            </div>
+          </header>
+
+          <section class="top-metrics">
+            <article class="metric-card gradient-card">
+              <span>Total balance</span>
+              <strong>$24,860</strong>
+              <small>+12.8% this month</small>
+            </article>
+            <article class="metric-card">
+              <span>Income</span>
+              <strong>$8,420</strong>
+              <small>Salary + freelance</small>
+            </article>
+            <article class="metric-card">
+              <span>Expenses</span>
+              <strong>$3,740</strong>
+              <small>Below plan</small>
+            </article>
+          </section>
+
+          <section class="dashboard-grid">
+            <article class="panel large-panel">
+              <div class="panel-header">
+                <h3>Cashflow</h3>
+                <button class="chip-btn" type="button">This month</button>
+              </div>
+              <div class="chart-box">
+                <svg viewBox="0 0 500 200" class="cashflow-chart" aria-label="Cashflow chart">
+                  <path d="M10 160 C80 145, 100 120, 160 130 S250 90, 300 100 S380 45, 490 65" />
+                </svg>
+              </div>
+            </article>
+
+            <article class="panel budget-panel">
+              <div class="panel-header">
+                <h3>Budgets</h3>
+                <span>72% used</span>
+              </div>
+              <div class="budget-stack">
+                <div class="budget-row">
+                  <label>Housing</label>
+                  <strong>1,450 / 1,800</strong>
+                  <div class="progress"><span style="width: 81%"></span></div>
+                </div>
+                <div class="budget-row">
+                  <label>Food</label>
+                  <strong>420 / 550</strong>
+                  <div class="progress"><span style="width: 76%"></span></div>
+                </div>
+                <div class="budget-row">
+                  <label>Travel</label>
+                  <strong>260 / 600</strong>
+                  <div class="progress"><span style="width: 43%"></span></div>
+                </div>
+              </div>
+            </article>
+          </section>
+
+          <section class="lower-grid">
+            <article class="panel transactions-panel">
+              <div class="panel-header">
+                <h3>Recent activity</h3>
+                <button class="chip-btn" type="button">View all</button>
+              </div>
+              <div class="tx-list">
+                <div class="tx-row">
+                  <div class="tx-meta">
+                    <strong>Salary deposit</strong>
+                    <span>Today • Salary</span>
+                  </div>
+                  <div class="tx-amount positive">+$4,200</div>
+                </div>
+                <div class="tx-row">
+                  <div class="tx-meta">
+                    <strong>Apartment rent</strong>
+                    <span>Yesterday • Housing</span>
+                  </div>
+                  <div class="tx-amount negative">-$1,450</div>
+                </div>
+                <div class="tx-row">
+                  <div class="tx-meta">
+                    <strong>Grocery run</strong>
+                    <span>Mon • Food</span>
+                  </div>
+                  <div class="tx-amount negative">-$420</div>
+                </div>
+              </div>
+            </article>
+
+            <article class="panel goals-panel">
+              <div class="panel-header">
+                <h3>Savings goals</h3>
+                <button class="chip-btn" type="button">Add goal</button>
+              </div>
+              <div class="goal-list">
+                <div class="goal-row">
+                  <div class="goal-copy">
+                    <strong>Emergency fund</strong>
+                    <span>$14.2K / $20K</span>
+                  </div>
+                  <div class="goal-percent">71%</div>
+                </div>
+                <div class="goal-row">
+                  <div class="goal-copy">
+                    <strong>Vacation</strong>
+                    <span>$4.6K / $8K</span>
+                  </div>
+                  <div class="goal-percent">58%</div>
+                </div>
+              </div>
+            </article>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      const listingPage = document.getElementById('listingPage');
+      const authPage = document.getElementById('authPage');
+      const dashboardPage = document.getElementById('dashboardPage');
+      const browserLoginForm = document.getElementById('browserLoginForm');
+      const loginEmail = document.getElementById('loginEmail');
+      const loginPassword = document.getElementById('loginPassword');
+      const loginStatus = document.getElementById('loginStatus');
+      const logoutBtn = document.getElementById('logoutBtn');
+      const openListingBtn = document.getElementById('openListingBtn');
+      const signInTab = document.getElementById('signInTab');
+      const createAccountTab = document.getElementById('createAccountTab');
+      const authTitle = document.getElementById('authTitle');
+      const authSubtitle = document.getElementById('authSubtitle');
+      const authSubmitBtn = document.getElementById('authSubmitBtn');
+      let authMode = 'signin';
+
+      const showPage = (pageName) => {
+        listingPage.classList.toggle('hidden', pageName !== 'listing');
+        authPage.classList.toggle('hidden', pageName !== 'auth');
+        dashboardPage.classList.toggle('hidden', pageName !== 'dashboard');
+      };
+
+      const setStatus = (message, type) => {
+        loginStatus.textContent = message;
+        loginStatus.classList.remove('success', 'error');
+        if (type) loginStatus.classList.add(type);
+      };
+
+      const setAuthMode = (mode) => {
+        authMode = mode;
+        const isSignup = mode === 'signup';
+
+        signInTab.classList.toggle('active', !isSignup);
+        createAccountTab.classList.toggle('active', isSignup);
+        authTitle.textContent = isSignup ? 'Create your account' : 'Welcome back';
+        authSubtitle.textContent = isSignup
+          ? 'Create an account to manage budgets, goals, and cash flow from anywhere.'
+          : 'Access your finances from mobile or browser without friction.';
+        authSubmitBtn.textContent = isSignup ? 'Create account' : 'Log in';
+      };
+
+      const persistUser = (user, token = null) => {
+        if (user && user.email) {
+          localStorage.setItem('homoraUser', JSON.stringify(user));
+          if (token) {
+            localStorage.setItem('homora_token', token);
+          }
+        } else {
+          localStorage.removeItem('homoraUser');
+          localStorage.removeItem('homora_token');
+        }
+      };
+
+      const apiRequest = async (url, options = {}) => {
+        const token = localStorage.getItem('homora_token');
+        const response = await fetch(url, {
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+            ...(options.headers || {})
+          },
+          ...options,
+        });
+
+        const contentType = response.headers.get('content-type') || '';
+        const data = contentType.includes('application/json') ? await response.json() : {};
+
+        if (!response.ok) {
+          throw new Error(data.message || 'Request failed.');
+        }
+
+        return data;
+      };
+
+      const refreshAuthState = async () => {
+        try {
+          const response = await apiRequest('/api/auth/me');
+          persistUser(response.user, localStorage.getItem('homora_token'));
+          showPage('dashboard');
+        } catch (error) {
+          persistUser(null, null);
+          showPage('listing');
+        }
+      };
+
+      const initApp = async () => {
+        setAuthMode('signin');
+        await refreshAuthState();
+      };
+
+      document.getElementById('openAuthBtn')?.addEventListener('click', () => {
+        showPage('auth');
+        setAuthMode('signin');
+      });
+      document.getElementById('demoDashboardBtn')?.addEventListener('click', () => {
+        showPage('auth');
+        setAuthMode('signin');
+      });
+      document.getElementById('getAppBtn')?.addEventListener('click', () => {
+        showPage('auth');
+        setAuthMode('signin');
+      });
+      openListingBtn?.addEventListener('click', () => showPage('listing'));
+      signInTab?.addEventListener('click', () => setAuthMode('signin'));
+      createAccountTab?.addEventListener('click', () => setAuthMode('signup'));
+
+      browserLoginForm?.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const email = loginEmail.value.trim();
+        const password = loginPassword.value.trim();
+
+        if (!email || !password) {
+          setStatus('Please enter both email and password.', 'error');
+          return;
+        }
+
+        if (!email.includes('@')) {
+          setStatus('Please enter a valid email address.', 'error');
+          return;
+        }
+
+        if (authMode === 'signup' && password.length < 6) {
+          setStatus('Password must be at least 6 characters long.', 'error');
+          return;
+        }
+
+        try {
+          const endpoint = authMode === 'signup' ? '/api/auth/signup' : '/api/auth/login';
+          const result = await apiRequest(endpoint, {
+            method: 'POST',
+            body: JSON.stringify({ email, password }),
+          });
+
+          persistUser(result.user, result.token);
+          const successMessage = authMode === 'signup'
+            ? `Account created for ${result.user.email}. Redirecting to dashboard...`
+            : `Welcome back, ${result.user.email}! Redirecting to dashboard...`;
+          setStatus(successMessage, 'success');
+          setTimeout(async () => {
+            await refreshAuthState();
+          }, 700);
+        } catch (error) {
+          setStatus(error.message, 'error');
+        }
+      });
+
+      logoutBtn?.addEventListener('click', async () => {
+        try {
+          await apiRequest('/api/auth/logout', { method: 'POST' });
+        } catch (error) {
+          console.warn('Logout API call failed:', error);
+        }
+
+        persistUser(null, null);
+        loginEmail.value = '';
+        loginPassword.value = '';
+        setStatus('You have been logged out.', 'success');
+        setAuthMode('signin');
+        showPage('listing');
+      });
+
+      initApp();
+    </script>
+  </body>
+</html>
